@@ -2,9 +2,6 @@
 
 Since the code is pushed in branch "cucumber-spring-responseCompare" 
 
-kindly clone the project using branch command: 
-git clone -b cucumber-spring-responseCompare git@github.com:sreejithkunchu/FabulousCode.git
-
 Required Software's and Plugins:
 
 Java 1.8
