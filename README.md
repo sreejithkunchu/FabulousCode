@@ -1,7 +1,5 @@
 # Cucumber-Spring-Bdd framework to compare 2 files having API responses
 
-Since the code is pushed in branch "cucumber-spring-responseCompare" 
-
 Required Software's and Plugins:
 
 Java 1.8
