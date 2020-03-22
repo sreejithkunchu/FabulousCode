@@ -2,7 +2,6 @@ package com.fabulous.code.response.steps;
 
 import com.fabulous.code.response.helper.KnowsData;
 import com.fabulous.code.response.helper.ReponseCompareHelper;
-import com.fabulous.code.response.services.FileService;
 import com.fabulous.code.response.utils.CsvReader;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -18,9 +17,6 @@ public class UrlResponsesteps {
 
     @Autowired
     private ReponseCompareHelper reponseCompareHelper;
-
-    @Autowired
-    private FileService fileService;
 
 
     @Given("^user fetch the response of end URl given in file1 '(.*)'$")
