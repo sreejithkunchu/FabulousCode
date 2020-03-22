@@ -7,11 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -70,10 +68,9 @@ public class ReponseCompareHelper {
     public List<Map<String, String>> convertToObject(Object value) {
         List<Map<String, String>> fileData = new ArrayList<>();
         if (value instanceof Map) {
-            mapData(value,fileData);
-        }
-        else if(value instanceof List){
-            listData(value,fileData);
+            mapData(value, fileData);
+        } else if (value instanceof List) {
+            listData(value, fileData);
         }
 
         return fileData;
@@ -90,24 +87,41 @@ public class ReponseCompareHelper {
             } else if (entry.getValue() instanceof String) {
                 Map<String, String> string = objectMapper.convertValue(entry, Map.class);
                 fileData1.addAll(Collections.singletonList(string));
+            } else if (entry.getValue() instanceof Boolean) {
+                Map<String, String> bools = objectMapper.convertValue(entry, Map.class);
+                fileData1.addAll(Collections.singletonList(bools));
+            } else if (entry.getValue() instanceof Double) {
+                Map<String, String> doubl = objectMapper.convertValue(entry, Map.class);
+                fileData1.addAll(Collections.singletonList(doubl));
             } else if (entry.getValue() instanceof List) {
-                listData(entry.getValue(),fileData1);
+                listData(entry.getValue(), fileData1);
             } else if (entry.getValue() instanceof Map) {
-                mapData(entry.getValue(),fileData1);
-           }
+                mapData(entry.getValue(), fileData1);
+            }
         }
     }
 
-        private void listData(Object value, List<Map<String, String>> fileData1) {
-            ObjectMapper objectMapper = new ObjectMapper();
+    private void listData(Object value, List<Map<String, String>> fileData1) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        if (objectMapper.convertValue(value, List.class).get(0) instanceof Map) {
             List<Map<String, String>> lists = objectMapper.convertValue(value, List.class);
 
             lists.forEach(list -> {
-                    mapData(list,fileData1);
+                mapData(list, fileData1);
             });
-
-
-
+        } else {
+            List<Map<String, String>> listMap = new ArrayList<>();
+            Map<String, String> singleListMap = new HashMap<>();
+            AtomicInteger index = new AtomicInteger();
+            objectMapper.convertValue(value, List.class).forEach(list -> {
+                singleListMap.put(String.valueOf(index.get()), String.valueOf(list));
+                index.getAndIncrement();
+            });
+            listMap.add(singleListMap);
+            fileData1.addAll(listMap);
         }
+
+
+    }
 
 }
