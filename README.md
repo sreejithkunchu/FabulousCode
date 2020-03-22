@@ -17,6 +17,7 @@ Intellij Lombok Plugin
 
 
 Command to run from terminal:
+If in case while running the sceanrio if VM crashs or if you see error like merror leak then kindly increase the -Xmx300m in POM.xml to some higher value say ("-Xmx500m")
 Since it has now only one active profile, so Open terminal and navigate to the project where POM is located and run this maven command:
  mvn test
 
