@@ -17,7 +17,7 @@ Intellij Lombok Plugin
 
 
 Command to run from terminal:
-Since it has now only one active profile, so Open terminal and navigate to the project and run this maven command:
+Since it has now only one active profile, so Open terminal and navigate to the project where POM is located and run this maven command:
  mvn test
 
 
